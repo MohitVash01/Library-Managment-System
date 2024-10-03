@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 class="my-4">Book List</h2>
+    {% if books %}
+        <ul class="list-group">
+            {% for book in books %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ book.book_name }}</strong> (Serial No: {{ book.serial_number }}) borrowed by {{ book.student_name }} (Roll No: {{ book.roll_number }})<br>
+                        <small>Issued on: {{ book.issue_date.strftime('%Y-%m-%d') }}</small><br>
+                        <small>Deadline: {{ book.deadline_date.strftime('%Y-%m-%d') }}</small>
+                    </div>
+                    <a href="{{ url_for('delete_book', id=book.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="alert alert-warning">No books available. <a href="{{ url_for('add_book') }}">Add a book</a>.</p>
+    {% endif %}
+{% endblock %}
